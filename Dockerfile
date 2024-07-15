@@ -1,13 +1,18 @@
+# Use an official Nginx image as the base
 FROM nginx:alpine
 
-# Copy the template configuration file
-COPY nginx.conf.template /etc/nginx/templates/nginx.conf.template
+# Install envsubst for environment variable substitution
+RUN apk add --no-cache gettext
 
-# Install envsubst for variable substitution
-RUN apk --no-cache add gettext
+# Copy custom Nginx template configuration file
+COPY nginx.template.conf /etc/nginx/nginx.template.conf
 
-# Copy the script to substitute variables and start Nginx
-COPY start-nginx.sh /usr/local/bin/start-nginx.sh
-RUN chmod +x /usr/local/bin/start-nginx.sh
+# Copy the script to substitute environment variables and start Nginx
+COPY start.sh /start.sh
+RUN chmod +x /start.sh
 
-ENTRYPOINT ["/usr/local/bin/start-nginx.sh"]
+# Expose port 80
+EXPOSE 80
+
+# Start Nginx with the substituted configuration file
+CMD ["/start.sh"]
