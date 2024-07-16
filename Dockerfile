@@ -1,17 +1,11 @@
-# Use the official NGINX image from the Docker Hub
+# Use the official Nginx image as a base
 FROM nginx:alpine
 
-# Install envsubst
-RUN apk add --no-cache gettext
+# Copy the custom Nginx configuration file to the appropriate directory
+COPY nginx.conf /etc/nginx/nginx.conf
 
-# Copy the NGINX configuration template
-COPY nginx.template.conf /etc/nginx/nginx.template.conf
+# Expose port 80 to the outside world
+EXPOSE 80
 
-# Copy a script to substitute environment variables and start NGINX
-COPY start.sh /start.sh
-RUN chmod +x /start.sh
-
-# Expose port 80
-EXPOSE 8080
-
-CMD ["/start.sh"]
+# Start Nginx when the container launches
+CMD ["nginx", "-g", "daemon off;"]
