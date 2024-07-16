@@ -1,7 +1,7 @@
 #!/bin/sh
 
-# Substitute environment variables in the template configuration file
-envsubst < /etc/nginx/nginx.template.conf > /etc/nginx/nginx.conf
+# Substitute environment variables in the NGINX configuration template
+envsubst '\$FRONTEND_URL \$API_GATEWAY_URL \$EUREKA_URL' < /etc/nginx/nginx.template.conf > /etc/nginx/nginx.conf
 
-# Start Nginx
+# Start NGINX
 nginx -g 'daemon off;'

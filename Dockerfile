@@ -1,18 +1,17 @@
-# Use an official Nginx image as the base
+# Use the official NGINX image from the Docker Hub
 FROM nginx:alpine
 
-# Install envsubst for environment variable substitution
+# Install envsubst
 RUN apk add --no-cache gettext
 
-# Copy custom Nginx template configuration file
+# Copy the NGINX configuration template
 COPY nginx.template.conf /etc/nginx/nginx.template.conf
 
-# Copy the script to substitute environment variables and start Nginx
+# Copy a script to substitute environment variables and start NGINX
 COPY start.sh /start.sh
 RUN chmod +x /start.sh
 
 # Expose port 80
 EXPOSE 80
 
-# Start Nginx with the substituted configuration file
 CMD ["/start.sh"]
