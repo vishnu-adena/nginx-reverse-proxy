@@ -9,6 +9,7 @@ cat /etc/nginx/nginx.conf
 
 # Output the resolved IP addresses for debugging
 echo "Resolved IP addresses:"
+nslookup ui.adenavishnu.live
 nslookup edukan-api-gateway-production.up.railway.app
 nslookup edukan-service-register-production.up.railway.app
 
